@@ -1,0 +1,313 @@
+{
+	"info": {
+		"_postman_id": "2fb685fd-1ee1-42df-ab52-ab912213a879",
+		"name": "dev challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Creating a pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be62403a-87bf-4c56-a96f-a14e985e0929",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"status should be ok, response should be json\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"pet name from env is equal to pet name from response\", function () {",
+							"    pm.expect(pm.environment.get(\"petName\")).to.equal(",
+							"        pm.response.json().name",
+							"        );",
+							"});",
+							"",
+							"postman.setEnvironmentVariable(\"petId\", parseInt(pm.response.json().id));",
+							"",
+							"pm.test(\"env petId should equal to id from response\", function () {",
+							"    pm.expect(parseInt(pm.environment.get(\"petId\"))).to.equal(",
+							"        parseInt(pm.response.json().id)",
+							"        );",
+							"});",
+							"",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{petId}}\",\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"{{petName}}\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}"
+				},
+				"url": {
+					"raw": "http://petstore.swagger.io/v2/pet",
+					"protocol": "http",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find pet by Id (check if pet was added)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5f89215-777a-448a-88d5-c17d6518fba6",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"status should be ok, response should be json\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"pet name from env is equal to pet name from response\", function () {",
+							"    pm.expect(pm.environment.get(\"petName\")).to.equal(",
+							"        pm.response.json().name",
+							"        );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"{{petName}}\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}"
+				},
+				"url": {
+					"raw": "http://petstore.swagger.io/v2/pet/{{petId}}",
+					"protocol": "http",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{petId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update pet name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "902931db-7aeb-43de-b111-e823e6ef5b03",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"status should be ok, response should be json\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"pm.test(\"new pet name from env is equal to new pet name from response\", function () {",
+							"    pm.expect(pm.environment.get(\"newPetName\")).to.equal(",
+							"        pm.response.json().name",
+							"        );",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{petId}}\",\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"{{newPetName}}\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}"
+				},
+				"url": {
+					"raw": "http://petstore.swagger.io/v2/pet",
+					"protocol": "http",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c44d7272-34f4-4948-8f58-e32a5c1d03c7",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"status should be ok\", function () {",
+							"    pm.response.to.be.ok;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://petstore.swagger.io/v2/pet/{{petId}}",
+					"protocol": "http",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{petId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find pet by Id after deleting",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dac4ad77-e4a1-4875-b6bc-82c375e1d30f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"status should be error and 404 after pet was deleted\", function () {",
+							"    pm.response.to.be.error;",
+							"    pm.response.to.have.status(404);",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 0,\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"{{petName}}\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}"
+				},
+				"url": {
+					"raw": "http://petstore.swagger.io/v2/pet/{{petId}}",
+					"protocol": "http",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{petId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[BONUS] | Getting pet inventories from store",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f69dde43-9c33-4ef0-9ad7-1686242f0f18",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"status should be ok, response should be json\", function () {",
+							"    pm.response.to.be.ok;",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": \"{{petId}}\",\r\n  \"category\": {\r\n    \"id\": 1,\r\n    \"name\": \"string\"\r\n  },\r\n  \"name\": \"{{petName}}\",\r\n  \"photoUrls\": [\r\n    \"string\"\r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 1,\r\n      \"name\": \"string\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}"
+				},
+				"url": {
+					"raw": "http://petstore.swagger.io/v2/store/inventory",
+					"protocol": "http",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"store",
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
